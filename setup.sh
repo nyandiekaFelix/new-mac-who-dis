@@ -12,7 +12,7 @@ function config_brew() {
 function config_zsh() {
   echo -e "\n${COLOR}_____ Setting up ZSH _____${NO_COLOR}\n"
 
-  ZSH_DIR="~/.oh-my-zsh"
+  local ZSH_DIR="~/.oh-my-zsh"
 
   brew install zsh
   chsh -s /usr/local/bin/zsh
@@ -27,13 +27,19 @@ function config_git() {
 
   git config --global user.email ${GIT_EMAIL}
   git config --global user.name ${GIT_USERNAME}
-  # git config --global credential.helper osxkeychain
-  ssh-keygen -t rsa -b 4096 -C ${GIT_EMAIL}
   git config --global core.editor vim
   git config --global color.ui true
   git config --global color.diff auto
   git config --global color.status auto
   git config --global color.branch auto
+
+  # setup github ssh
+  ssh-keygen -t rsa -b 4096 -C ${GIT_EMAIL}
+  eval "$(ssh-agent -s)"
+  ssh-add -K ~/.ssh/id_rsa
+  pbcopy < ~/.ssh/id_rsa.pub
+  local red='\033[0;31m'
+  echo "\n${red}Public ssh key copied to clipboard; paste it where it's supposed to be on GitHub :-) ${NO_COLOR}\n"
 }
 
 function config_JS_env() {
@@ -41,13 +47,16 @@ function config_JS_env() {
 
   brew install node
   declare -a global_packages=(
-    @angular/cli 
-    @vue/cli 
-    eslint 
-    typescript 
-    create-react-app 
-    webpack 
     yarn 
+    @vue/cli 
+    @angular/cli
+    react-native
+    create-react-app 
+    jest
+    eslint
+    nodemon
+    webpack
+    typescript 
     firebase-tools
   )
   npm i -g ${global_packages[@]}
@@ -63,16 +72,33 @@ function config_py_env() {
   source ~/.zshrc
 }
 
+function install_apps() {
+  echo -e "\n${COLOR}_____ Installing apps _____${NO_COLOR}\n"
+
+  declare -a apps=(
+    vlc
+    slack
+    iterm2
+    spotify
+    tunnelbear
+    google-chrome
+    visual-studio-code
+  )
+  brew cask install ${apps[@]}
+}
+
 source .env
 
 xcode-select --install
 
 config_brew
 
-config zsh
+config_zsh
 
 config_git
 
 config_JS_env
 
 config_py_env
+
+install_apps

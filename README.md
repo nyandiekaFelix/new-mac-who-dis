@@ -1,3 +1,3 @@
-## My MacOS Dotfiles
+## MacOS start scripts
 
 
