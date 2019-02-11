@@ -27,6 +27,8 @@ function config_git() {
 
   git config --global user.email ${GIT_EMAIL}
   git config --global user.name ${GIT_USERNAME}
+  # git config --global credential.helper osxkeychain
+  ssh-keygen -t rsa -b 4096 -C ${GIT_EMAIL}
   git config --global core.editor vim
   git config --global color.ui true
   git config --global color.diff auto
