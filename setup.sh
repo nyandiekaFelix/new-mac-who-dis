@@ -3,13 +3,13 @@
 COLOR="\033[1;32m"
 NO_COLOR="\033[0m"
 
-function config_brew() {
+config_brew() {
   echo -e "\n${COLOR}_____ Setting up Homebrew _____${NO_COLOR}\n"
 
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
 
-function config_zsh() {
+config_zsh() {
   echo -e "\n${COLOR}_____ Setting up ZSH _____${NO_COLOR}\n"
 
   local ZSH_DIR="~/.oh-my-zsh"
@@ -22,7 +22,7 @@ function config_zsh() {
   sed -i '' -e 's/ZSH_THEME=.*/ZSH_THEME="nt9"/' ~/.zshrc
 }
 
-function config_git() {
+config_git() {
   echo -e "\n${COLOR}_____ Setting up Git _____${NO_COLOR}\n"
 
   git config --global user.email ${GIT_EMAIL}
@@ -42,37 +42,41 @@ function config_git() {
   echo "\n${red}Public ssh key copied to clipboard; paste it where it's supposed to be on GitHub :-) ${NO_COLOR}\n"
 }
 
-function config_JS_env() {
+config_JS_env() {
   echo -e "\n${COLOR}_____ Setting up JavaScript environment _____${NO_COLOR}\n"
 
   brew install node
   declare -a global_packages=(
-    yarn 
-    @vue/cli 
+    yarn
+    @vue/cli
     @angular/cli
     react-native
-    create-react-app 
+    create-react-app
     jest
     eslint
     nodemon
     webpack
-    typescript 
+    typescript
     firebase-tools
   )
   npm i -g ${global_packages[@]}
 }
 
-function config_py_env() {
+config_py_env() {
   echo -e "\n${COLOR}_____ Setting up Python environment _____${NO_COLOR}\n"
 
   brew install python3
   sudo pip install virtualenv virtualenvwrapper
-  echo -e "export WORKON_HOME=~/.virtualenvs" >> ~/.zshrc
-  echo -e "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.zshrc
+
+  cat <<EOF >> ~/.zshrc
+    export WORKON_HOME=~/.virtualenvs
+    source /usr/local/bin/virtualenvwrapper.sh
+EOF
+
   source ~/.zshrc
 }
 
-function install_apps() {
+install_apps() {
   echo -e "\n${COLOR}_____ Installing apps _____${NO_COLOR}\n"
 
   declare -a apps=(
@@ -102,3 +106,5 @@ config_JS_env
 config_py_env
 
 install_apps
+
+# To do - Logout & login again to finalize configs
