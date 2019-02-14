@@ -76,6 +76,15 @@ EOF
   source ~/.zshrc
 }
 
+config_aws_cli() {
+  echo -e "\n${COLOR}_____ Setting up AWS CLI _____${NO_COLOR}\n"
+
+  brew install awscli
+  aws configure
+
+  # To do - set access key ID & secret access key
+}
+
 install_apps() {
   echo -e "\n${COLOR}_____ Installing apps _____${NO_COLOR}\n"
 
