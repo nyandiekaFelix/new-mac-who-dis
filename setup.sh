@@ -49,6 +49,7 @@ config_JS_env() {
   declare -a global_packages=(
     yarn
     @vue/cli
+    @nestjs/cli
     @angular/cli
     react-native
     create-react-app
