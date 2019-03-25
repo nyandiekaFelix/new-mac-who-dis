@@ -57,7 +57,6 @@ config_JS_env() {
     jest
     eslint
     nodemon
-    webpack
     typescript
     firebase-tools
   )
